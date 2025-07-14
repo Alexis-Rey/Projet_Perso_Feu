@@ -57,9 +57,9 @@ button:hover {
   </style>
 </head>
 <body>
-     <audio id="musique" loop>
+     <!-- <audio id="musique" loop>
     <source src="musique.mp3" type="audio/mpeg">
-    </audio>
+    </audio> -->
   <canvas id="fireworks"></canvas>
   <div class="message">
     <h1>Ce soir, pti sucre je t’offre mon feu d’artifice 🎆</h1>
@@ -131,10 +131,10 @@ button:hover {
     setInterval(createFirework, 1500);
     animate();
 
-    window.addEventListener('load', () => {
-    const audio = document.getElementById('musique');
-    audio.volume = 0.2; // volume entre 0 (silence) et 1 (max)
-    });
+    // window.addEventListener('load', () => {
+    // const audio = document.getElementById('musique');
+    // audio.volume = 0.2; // volume entre 0 (silence) et 1 (max)
+    // });
   </script>
 </body>
 </html>
