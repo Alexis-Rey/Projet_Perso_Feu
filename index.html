@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pour Toi 🌟</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      overflow: hidden;
+      height: 100%;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body{     
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    }
+    canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    }
+    .message {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      max-width: 90%;
+      z-index: 2;
+    }
+    .message h1 {
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+    }
+    .message p {
+      font-size: 1em;
+    }
+
+    button {
+  padding: 10px 20px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background: #ffcc00;
+}
+  </style>
+</head>
+<body>
+     <audio id="musique" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+    </audio>
+  <canvas id="fireworks"></canvas>
+  <div class="message">
+    <h1>Ce soir, pti sucre je t’offre mon feu d’artifice 🎆</h1>
+    <p>Parce que tu mérites de briller. Parce que tu me fais exploser de tendresse et de désir. Et parce qu’à mes yeux, tu es déjà mon plus beau spectacle.🥹🥰<br><br>
+    Je sais que ce n'est pas la soirée que tu aurais voulu, mais j'ai voulu apporter le feu d'artifice jusqu'à toi à ma facon, reste jusqu'a la fin pour le grand finale ma marmotte </p>
+    <button class="bouton__mus" onclick="document.getElementById('musique').play()">Lancer la musique 🎶</button>
+</div>
+  
+
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = 2;
+        this.color = color;
+        this.speed = random(2, 10);
+        this.angle = random(0, 2 * Math.PI);
+        this.life = 0;
+        this.maxLife = 100;
+      }
+
+      update() {
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed;
+        this.life++;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function createFirework() {
+      const x = random(canvas.width * 0.2, canvas.width * 0.8);
+      const y = random(canvas.height * 0.2, canvas.height * 0.6);
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle(x, y, color));
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(p => p.life < p.maxLife);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    setInterval(createFirework, 1500);
+    animate();
+
+    window.addEventListener('load', () => {
+    const audio = document.getElementById('musique');
+    audio.volume = 0.2; // volume entre 0 (silence) et 1 (max)
+    });
+  </script>
+</body>
+</html>
